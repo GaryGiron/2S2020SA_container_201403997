@@ -1,0 +1,34 @@
+version: "3"
+# colocamos los servicios que vamos a utilizar, en este caso web y mysql 
+services:
+  mysql:
+    #se identifica la imagen y los datos de entorno para la base de datos
+    image: mysql:5.7
+    container_name: docker-mysql
+    environment:
+      - MYSQL_DATABASE=sa
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    volumes:
+      # Montamos un volumen para MySQL para no perder los datos de bd
+      - ./mysql:/var/lib/mysql
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+   
+  web:
+    image: php:7.3-apache
+    container_name: docker-php
+    volumes:
+      # Montamos nuestra web desde fuera en el directorio web del contenedor
+      - ./miweb/:/var/www/html
+    expose:
+      - 80
+    ports:
+      #linkeamos los puertos 80 del contenedor y la maquina donde esta corriendo
+      - 80:80
+    links: 
+      - mysql
+
