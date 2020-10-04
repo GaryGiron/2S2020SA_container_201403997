@@ -19,7 +19,8 @@ services:
       - 3306:3306
    
   web:
-    image: php:7.3-apache
+    #Traemos la imagen generada por del Dockerfile
+    image: php_gary:latest
     container_name: docker-php
     volumes:
       # Montamos nuestra web desde fuera en el directorio web del contenedor
